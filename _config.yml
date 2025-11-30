@@ -1,0 +1,37 @@
+title: "Pillars of Thought"
+description: "A minimal, paper-textured notebook of ideas across history, philosophy, theology, and policy."
+author: "Pillars Collective"
+url: ""
+baseurl: ""
+permalink: "/:categories/:year/:month/:day/:title/"
+markdown: kramdown
+theme: null
+collections:
+  posts:
+    output: true
+    permalink: "/:categories/:year/:month/:day/:title/"
+plugins: []
+
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: post
+      pillar: philosophy
+      topics: []
+      tags: []
+
+navigation:
+  title: "Pillars of Philosophy"
+  links:
+    - label: "Archive"
+      url: "/archive.html"
+    - label: "About"
+      url: "#about"
+
+pillars:
+  - history
+  - philosophy
+  - theology
+  - policy

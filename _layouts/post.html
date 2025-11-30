@@ -1,0 +1,56 @@
+---
+layout: default
+---
+<article class="post">
+  <header class="post-header">
+    <p class="post-pillar">{{ page.pillar | capitalize }}</p>
+    <h1>{{ page.title }}</h1>
+    <p class="post-date">{{ page.date | date: '%B %d, %Y' }}</p>
+    {% if page.header_image %}
+    <figure class="post-figure">
+      <img src="{{ page.header_image | relative_url }}" alt="">
+    </figure>
+    {% endif %}
+  </header>
+  <div class="post-body">
+    {{ content }}
+  </div>
+  <section class="post-meta-block" aria-label="Post tags">
+    <div class="tag-row">
+      <span class="tag-pill">{{ page.pillar | capitalize }}</span>
+      {% for topic in page.topics %}
+      <span class="tag-pill">{{ topic }}</span>
+      {% endfor %}
+    </div>
+  </section>
+  <section class="related-posts" aria-labelledby="related-heading">
+    <h2 id="related-heading">Related reading</h2>
+    <div class="related-grid">
+      {% assign related = site.posts | where: 'pillar', page.pillar %}
+      {% assign shared_topics = '' | split: '' %}
+      {% for t in page.topics %}
+        {% assign shared_topics = shared_topics | push: t %}
+      {% endfor %}
+      {% for post in site.posts %}
+        {% if post.url != page.url %}
+          {% for topic in shared_topics %}
+            {% if post.topics contains topic %}
+              {% assign related = related | push: post %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      {% endfor %}
+      {% assign related = related | uniq | where_exp: 'p','p.url != page.url' | slice: 0, 4 %}
+      {% for post in related %}
+      <article class="related-card">
+        <p class="related-pill">{{ post.pillar | capitalize }}</p>
+        <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+        <p class="related-date">{{ post.date | date: '%b %d, %Y' }}</p>
+      </article>
+      {% endfor %}
+      {% if related == empty %}
+      <p class="related-empty">No close neighbors yet.</p>
+      {% endif %}
+    </div>
+  </section>
+</article>

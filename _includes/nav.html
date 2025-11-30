@@ -1,0 +1,38 @@
+<header class="site-header">
+  <div class="nav-bar">
+    <button class="icon-button menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span class="menu-icon" aria-hidden="true"></span>
+    </button>
+    <a class="site-title" href="{{ '/' | relative_url }}">{{ site.navigation.title }}</a>
+    <button class="icon-button search-button" aria-label="Search site">
+      <span class="search-icon" aria-hidden="true">&#128269;</span>
+    </button>
+  </div>
+  <div class="menu-drawer" hidden>
+    <div class="menu-card">
+      <div class="menu-card__header">
+        <p class="menu-kicker">About</p>
+        <p class="menu-subtext">Pillars of Thought collects essays that read like penciled notes in the margins of an old syllabus.</p>
+      </div>
+      <nav class="menu-links">
+        {% for link in site.navigation.links %}
+        <a href="{{ link.url | relative_url }}">{{ link.label }}</a>
+        {% endfor %}
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </div>
+</header>
+<script>
+(function() {
+  const drawer = document.querySelector('.menu-drawer');
+  const toggle = document.querySelector('.menu-toggle');
+  if (!drawer || !toggle) return;
+  toggle.addEventListener('click', () => {
+    const open = drawer.hasAttribute('data-open');
+    drawer.toggleAttribute('data-open');
+    drawer.hidden = open;
+    toggle.setAttribute('aria-expanded', String(!open));
+  });
+})();
+</script>

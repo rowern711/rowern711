@@ -1,0 +1,39 @@
+---
+layout: default
+---
+<section class="hero" aria-label="Pillars overview">
+  <div class="lined-row">
+    {% for pillar in site.pillars %}
+    <article class="pillar-card">
+      <div class="pillar-illustration pillar-{{ pillar }}" aria-hidden="true">
+        <span class="pillar-glyph">¶</span>
+      </div>
+      <h2 class="pillar-title"><a href="{{ '/archive.html?tag=' | append: pillar | relative_url }}">{{ pillar | capitalize }}</a></h2>
+      <p class="pillar-note">Notes gathered under {{ pillar | capitalize }}.</p>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+<section class="topics" aria-labelledby="topics-heading">
+  <div class="section-header">
+    <h3 id="topics-heading">Browse by Topic</h3>
+    <p class="section-sub">Threads woven through every pillar.</p>
+  </div>
+  <div class="topic-grid">
+    {% assign pillars = site.pillars %}
+    {% assign topic_tags = '' | split: '' %}
+    {% for tag in site.tags %}
+      {% assign tag_name = tag[0] %}
+      {% unless pillars contains tag_name %}
+        {% assign topic_tags = topic_tags | push: tag_name %}
+      {% endunless %}
+    {% endfor %}
+    {% assign topic_tags = topic_tags | sort %}
+    {% for topic in topic_tags %}
+    <a class="topic-chip" href="{{ '/archive.html?topic=' | append: topic | relative_url }}">{{ topic | replace: '-', ' ' | capitalize }}</a>
+    {% endfor %}
+  </div>
+</section>
+<section class="archive-cta" aria-label="Archive call to action">
+  <a class="archive-button" href="{{ '/archive.html' | relative_url }}">Browse the Entire Archive</a>
+</section>
